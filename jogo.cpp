@@ -37,7 +37,6 @@ int main() {
                 exibir_sobre();
                 break;
             case 4:
-                cout << "\nOpção escolhida: Fim\n";
                 break;
             default:
                 cout << "\nOpção inválida\n";
