@@ -76,8 +76,7 @@ void exibir_sobre() {
     cout << "- O personagem não pode puxar as caixas.\n";
     cout << "- O personagem não pode passar através das caixas.\n";
     cout << "- O personagem não pode passar através das paredes.\n";
-    cout << "- Boa sorte e divirta-se!\n";
-    cout << "Informações do mês de março de 2023.\n";
+    cout << "Março de 2023.\n";
 }
 
 void novo_jogo() {
@@ -107,9 +106,12 @@ void novo_jogo() {
             case 3:
                 cout << "\nMapa escolhido: Mapa 3\n";
                 break;
-            case 4:
-                cout << "\nMapa escolhido: Aleatório\n";
+            case 4: {
+                srand(time(NULL));
+                int mapa_aleatorio = rand() % 3 + 1;
+                cout << "\nMapa escolhido: Mapa " << mapa_aleatorio << "\n";
                 break;
+            }
             case 5:
                 cout << "\nOpção escolhida: Voltar\n";
                 break;
@@ -133,3 +135,4 @@ void novo_jogo() {
         }
     }
 }
+
