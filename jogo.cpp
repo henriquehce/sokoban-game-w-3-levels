@@ -1,6 +1,8 @@
 #include <iostream>
 #include <locale.h>
 #include <cstdlib> // para rand()
+#include<windows.h>
+#include<conio.h>
 
 using namespace std;
 
@@ -8,11 +10,18 @@ void exibir_menu();
 void exibir_sobre();
 void novo_jogo();
 
+//-------------------------------------------------------------------------------
 int main() {
+    //INICIO: COMANDOS PARA QUE O CURSOR NÃO FIQUE PISCANDO NA TELA
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO     cursorInfo;
+    GetConsoleCursorInfo(out, &cursorInfo);
+    cursorInfo.bVisible = false; // set the cursor visibility
+    SetConsoleCursorInfo(out, &cursorInfo);
+    //FIM: COMANDOS PARA QUE O CURSOR NÃO FIQUE PISCANDO NA TELA
     setlocale(LC_ALL, "Portuguese");
-
+    
     int opcao = 0;
-
     while (opcao != 4) {
         exibir_menu();
 
@@ -79,7 +88,8 @@ void exibir_sobre() {
 }
 
 void novo_jogo() {
-    cout << "\nOpção escolhida: Novo Jogo\n";
+    cout << "\n Novo Jogo iniciado\n";
+
 
     int opcao_mapa = 0;
 
@@ -97,7 +107,7 @@ void novo_jogo() {
 
         switch (opcao_mapa) {
             case 1:
-                cout << "\nMapa escolhido: Mapa 1\n";
+                cout << "\nMapa escolhido: Mapa 1\n";                           
                 break;
             case 2:
                 cout << "\nMapa escolhido: Mapa 2\n";
@@ -131,7 +141,8 @@ void novo_jogo() {
             system("cls"); 
             cout << "\nOpção inválida\n";
             continue; 
+
+
         }
     }
 }
-
