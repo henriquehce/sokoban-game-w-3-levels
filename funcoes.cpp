@@ -108,7 +108,15 @@ void mover_cd (int m[10][19], int new_x, int new_y ){
 
 }
 
-void mover(int m[10][19], int &x, int &y) {
+void exibir_menu_pausa() {
+    system("cls");
+    cout << "Jogo pausado\n\n";
+    cout << "1. Reiniciar o jogo\n";
+    cout << "2. Continuar o jogo\n";
+    cout << "3. Sair\n";
+}
+
+int mover(int m[10][19], int &x, int &y) {
     char tecla;
 
     // executa os movimentos
@@ -140,6 +148,19 @@ void mover(int m[10][19], int &x, int &y) {
                 mover_cd(m, new_x, new_y);
             }
             break;
+        case 27:  { // Código ASCII para a tecla "ESC"
+                system("cls");
+                exibir_menu_pausa();
+                char opcao_pausa = getch();
+                switch (opcao_pausa) {
+                case '1':
+                    return 1;
+                case '2':
+                    return 2;
+                case '3':
+                    return 3;
+                }
+        }
         }
 
         // verifica se a nova posição é uma parede ou não
@@ -148,8 +169,12 @@ void mover(int m[10][19], int &x, int &y) {
             x = new_x;
             y = new_y;
         }
-    }
+
+
 }
+    return 0;
+}
+
 bool vitoria(int mapa[10][19], int x, int y) {
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 19; j++) {
@@ -168,13 +193,6 @@ bool vitoria(int mapa[10][19], int x, int y) {
     return true;
     }
 
-void exibir_menu_pausa() {
-    system("cls");
-    cout << "Jogo pausado\n\n";
-    cout << "1. Reiniciar o jogo\n";
-    cout << "2. Continuar o jogo\n";
-    cout << "3. Sair\n";
-}
 
 void exibir_menu() {
     cout << "=== MENU ===\n";
@@ -237,29 +255,16 @@ void novo_jogo() {
                         mover_cb(mapa, x, y);
                         mover_ce(mapa, x, y);
                         mover_cd(mapa, x, y);
-                        if (kbhit()) {
-                            char tecla = getch();
-                            if (tecla == 27) { // Código ASCII para a tecla "ESC"
-                                system("cls");
-                                exibir_menu_pausa();
-                                char opcao_pausa = getch();
-                                if (opcao_pausa == '1') {
-                                    // Reinicia o jogo
-                                    mapa1(mapa);
-                                    x = 3;
-                                    y = 7;
-                            } else if (opcao_pausa == '2') {
-                                // Continua o jogo
-                            } else if (opcao_pausa == '3') {
-                                    // Sai do menu de pausa
-                                    system("cls");
-                                    break;
-                          }
+                        int move = mover(mapa,x , y);
+                        if (move == 1) {
+                            mapa1(mapa);
+                            x = 3;
+                            y = 7;
+                        }else if(move == 3) {
                             system("cls");
-                         }
-                    }
-                        mover(mapa, x, y);
+                            break;
 
+                        }
                 }
                 cin.clear(); // Limpa o buffer
                 cin.ignore(); // Ignora o caractere digitado
@@ -281,32 +286,18 @@ void novo_jogo() {
                         mover_cb(mapa, x, y);
                         mover_ce(mapa, x, y);
                         mover_cd(mapa, x, y);
-                        if (kbhit()) {
-                            char tecla = getch();
-                            if (tecla == 27) { // Código ASCII para a tecla "ESC"
-                                system("cls");
-                                exibir_menu_pausa();
-                                char opcao_pausa = getch();
-                                if (opcao_pausa == '1') {
-                                    // Reinicia o jogo
-                                    mapa2(mapa);
-                                    x = 1;
-                                    y = 1;
-                            } else if (opcao_pausa == '2') {
-                                // Continua o jogo
-                            } else if (opcao_pausa == '3') {
-                                    // Sai do menu de pausa
-                                    system("cls");
-                                    break;
-                          }
+                        int move = mover(mapa,x , y);
+                        if (move == 1) {
+                            mapa2(mapa);
+                            x = 1;
+                            y = 1;
+                        }else if(move == 3) {
                             system("cls");
-                         }
-                    }
-                        mover(mapa, x, y);
-
+                            break;
                 }
                 break;
             }
+        }
             case 3: {
                 opcao_mapa = true;
                  cout << "\nMapa escolhido: Mapa 3\n";
@@ -322,31 +313,19 @@ void novo_jogo() {
                         mover_cb(mapa, x, y);
                         mover_ce(mapa, x, y);
                         mover_cd(mapa, x, y);
-                        if (kbhit()) {
-                            char tecla = getch();
-                            if (tecla == 27) { // Código ASCII para a tecla "ESC"
-                                system("cls");
-                                exibir_menu_pausa();
-                                char opcao_pausa = getch();
-                                if (opcao_pausa == '1') {
-                                    // Reinicia o jogo
-                                    mapa3(mapa);
-                                    x = 5;
-                                    y = 9;
-                            } else if (opcao_pausa == '2') {
-                                // Continua o jogo
-                            } else if (opcao_pausa == '3') {
-                                    // Sai do menu de pausa
-                                    system("cls");
-                                    break;
-                          }
+                        int move = mover(mapa,x , y);
+                        if (move == 1) {
+                            mapa3(mapa);
+                            x = 5;
+                            y = 9;
+                        }else if(move == 3) {
                             system("cls");
-                         }
-                    }
-                        mover(mapa, x, y);
+                            break;
+
                 }
                 break;
             }
+        }
             case 4: {
                 opcao_mapa = true;
                 srand(time(NULL));
@@ -367,30 +346,17 @@ void novo_jogo() {
                         mover_cb(mapa, x, y);
                         mover_ce(mapa, x, y);
                         mover_cd(mapa, x, y);
-                        if (kbhit()) {
-                            char tecla = getch();
-                            if (tecla == 27) { // Código ASCII para a tecla "ESC"
-                                system("cls");
-                                exibir_menu_pausa();
-                                char opcao_pausa = getch();
-                                if (opcao_pausa == '1') {
-                                    // Reinicia o jogo
-                                    mapa1(mapa);
-                                    x = 3;
-                                    y = 7;
-                            } else if (opcao_pausa == '2') {
-                                // Continua o jogo
-                            } else if (opcao_pausa == '3') {
-                                    // Sai do menu de pausa
-                                    system("cls");
-                                    break;
-                          }
+                        int move = mover(mapa,x , y);
+                        if (move == 1) {
+                            mapa1(mapa);
+                            x = 3;
+                            y = 7;
+                        }else if(move == 3) {
                             system("cls");
-                         }
-                    }
-                        mover(mapa, x, y);
+                            break;
 
                     }
+                }
                 }
                 else if(mapa_aleatorio == 2){
 
@@ -406,31 +372,18 @@ void novo_jogo() {
                         mover_cb(mapa, x, y);
                         mover_ce(mapa, x, y);
                         mover_cd(mapa, x, y);
-                        if (kbhit()) {
-                            char tecla = getch();
-                            if (tecla == 27) { // Código ASCII para a tecla "ESC"
-                                system("cls");
-                                exibir_menu_pausa();
-                                char opcao_pausa = getch();
-                                if (opcao_pausa == '1') {
-                                    // Reinicia o jogo
-                                    mapa2(mapa);
-                                    x = 1;
-                                    y = 1;
-                            } else if (opcao_pausa == '2') {
-                                // Continua o jogo
-                            } else if (opcao_pausa == '3') {
-                                    // Sai do menu de pausa
-                                    system("cls");
-                                    break;
-                          }
+                        int move = mover(mapa,x , y);
+                        if (move == 1) {
+                            mapa2(mapa);
+                            x = 1;
+                            y = 1;
+                        }else if(move == 3) {
                             system("cls");
-                         }
-                    }
-                        mover(mapa, x, y);
+                            break;
 
                         }
                  }
+                }
                 else{
 
                     int mapa[10][19] = {0};
@@ -444,34 +397,21 @@ void novo_jogo() {
                         mover_cb(mapa, x, y);
                         mover_ce(mapa, x, y);
                         mover_cd(mapa, x, y);
-                        if (kbhit()) {
-                            char tecla = getch();
-                            if (tecla == 27) { // Código ASCII para a tecla "ESC"
-                                system("cls");
-                                exibir_menu_pausa();
-                                char opcao_pausa = getch();
-                                if (opcao_pausa == '1') {
-                                    // Reinicia o jogo
-                                    mapa3(mapa);
-                                    x = 5;
-                                    y = 9;
-                            } else if (opcao_pausa == '2') {
-                                // Continua o jogo
-                            } else if (opcao_pausa == '3') {
-                                    // Sai do menu de pausa
-                                    system("cls");
-                                    break;
-                          }
+                        int move = mover(mapa,x , y);
+                        if (move == 1) {
+                            mapa3(mapa);
+                            x = 5;
+                            y = 9;
+                        }else if(move == 3) {
                             system("cls");
-                         }
-                    }
-                        mover(mapa, x, y);
+                            break;
 
                     }
                 }
 
                 break;
             }
+          }
             case 5:
                 opcao_mapa = true;
                 cout << "\nOpção escolhida: Voltar\n";
