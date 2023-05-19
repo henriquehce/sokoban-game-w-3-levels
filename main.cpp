@@ -107,7 +107,7 @@ struct MAPA {
 
         arquivo.close();
         return true;
-    }  
+    }
 
     string mapa(string nome_arquivo) {
         if (nome_arquivo == "mapa1.txt") {
@@ -123,7 +123,7 @@ struct MAPA {
 
 };
 
-struct MOVIMENTO { 
+struct MOVIMENTO {
 
     MAPA mp;
     MENU mn;
@@ -328,7 +328,7 @@ struct JOGO {
                             system("pause");
                             system("cls");
                         }
-                        
+
                     } else if (move == 5) {
                         system("cls");
                         break;
@@ -416,7 +416,7 @@ struct JOGO {
 
             }
         }
-    } 
+    }
 
     void novo_jogo(int *opcao) {
         int opcao_mapa = 0;
@@ -450,7 +450,7 @@ struct JOGO {
             int x = 0;
             int y = 0;
             int** matriz = new int*[l];
-            if (opcao_mapa != 5){
+            if (opcao_mapa != 5 && opcao_mapa != 4){
 
                 for (int i = 0; i < l; i++){
                     matriz[i] = new int[c];
@@ -468,9 +468,22 @@ struct JOGO {
                 system("cls");
                 int mapa_aleatorio = rand() % 3 + 1;
                 opcao_mapa = mapa_aleatorio;
-                cout << "\n\n\n\n\n\n\n\n\n\n\nMapa escolhido: Mapa " << mapa_aleatorio << "\n";
+                cout << "Mapa escolhido: Mapa " << mapa_aleatorio << "\n";
                 char nomeArquivo[10] = {};
                 sprintf(nomeArquivo, "mapa%d.txt", mapa_aleatorio);
+                    if(opcao_mapa == 3){
+                    l = 7;
+                    c = 6;
+                }else if(opcao_mapa == 2){
+                    l = 10;
+                    c = 17;
+                }else if(opcao_mapa == 1){
+                    l = 10;
+                    c = 19;
+                }
+                for (int i = 0; i < l; i++){
+                    matriz[i] = new int[c];
+                }
                 string mapa_selecionado = mp.mapa(nomeArquivo);
                 if (mp.ler_arquivo(matriz, &x, &y, nomeArquivo, l, c)) {
                     jogar(matriz, x, y, opcao, mapa_selecionado, l, c);
@@ -488,7 +501,7 @@ struct JOGO {
         mn.exibir_menu(opcao);
     }
 
-    
+
 
 };
 
@@ -504,7 +517,7 @@ struct JOGO {
         cout << "- O personagem não pode passar através das caixas.\n";
         cout << "- O personagem não pode passar através das paredes.\n";
         cout << "Março de 2023.\n";
-    }   
+    }
 
     void MENU::escolha_menu(int *opcao) {
         JOGO j;
